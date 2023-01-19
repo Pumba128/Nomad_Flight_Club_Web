@@ -1,0 +1,35 @@
+{% extends "web/base.html" %}
+
+{% block content %}
+    <h1 class="mb-3">Flight's details:</h1>
+    <a class="btn btn-outline-secondary mt-1 mb-3" href="{% url 'flights-list' %}">Back to Flights</a>
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+                <div>
+                  <a class="btn btn-secondary btn-sm my-1" href="{% url 'flight-update' object.id %}">Edit</a>
+                  <a class="btn btn-danger btn-sm my-1" href="{% url 'flight-delete' object.id %}">Delete</a>
+                </div>
+            </div>
+                <h2>Flight from {{ object.title }}</h2>
+                <h4>Search criteria:</h4>
+                <p>Adults: {{ object.adults }}<br>
+                   Dates: from {{ object.from_date|date:'d-m-Y' }} to {{ object.to_date|date:'d-m-Y' }}<br>
+                   Nights: from {{ object.min_nights }} to {{ object.max_nights }}<br>
+                   Stopover time: from {{ object.stopover_from }}h to {{ object.stopover_to }}h<br>
+                   Max stopovers: {{ object.max_sector_stopovers}}<br>
+                </p>
+                {% if object.price != Null %}
+                    <h4>Search results:</h4>
+                    <h5>Lowest price: {{ object.price }}€</h5>
+                    <p>Departure date: {{ object.departure_date|date:'d-m-Y' }}<br>
+                       Return date: {{ object.arrival_date|date:'d-m-Y' }}<br>
+                       Nights in destination: {{ object.nights }}<br>
+                    </p>
+                    <a class="btn btn-secondary btn-sm my-1" href="{{ object.tequila_affiliate_link }}">Book flight</a>
+                {% else %}
+                    <h4>No results for these criteria.</h4>
+                {% endif %}
+          </div>
+        </article>
+{% endblock content %}

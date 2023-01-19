@@ -1,0 +1,31 @@
+{% extends "web/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1>Welcome to Nomad Flight Club - Prototype!</h1>
+    {% if not user.is_authenticated %}
+        <div class="content-section">
+          <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Create an account</legend>
+
+              {{ form|crispy }}
+
+            </fieldset>
+            <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+          </form>
+          <div class="border-top pt-3">
+            <small class="text-muted">
+            Already have an account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+            </small>
+          </div>
+        </div>
+    {% else %}
+    <div>
+        <a class="btn btn-secondary mt-1 mb-3" href="{% url 'flight-create' %}">Add new Flight</a>
+        <a class="btn btn-outline-secondary mt-1 mb-3" href="{% url 'flights-list' %}">Go to your Flights</a>
+    </div>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends "web/base.html" %}
+
+{% block content %}
+    <h1 class="mb-3">Flights you are following:</h1>
+    <a class="btn btn-secondary mt-1 mb-3" href="{% url 'flight-create' %}">Add new Flight</a>
+    {% for flight in flights %}
+        {% if flight.user == user %}
+            <article class="media content-section">
+              <div class="media-body">
+                <div class="article-metadata">
+                  <a class="btn btn-outline-secondary btn-sm my-1" href="{% url 'flight-update' flight.id %}">Edit</a>
+                  <a class="btn btn-outline-danger btn-sm my-1" href="{% url 'flight-delete' flight.id %}">Delete</a>
+                </div>
+                <h2><a class="article-title" href="{% url 'flight-detail' flight.id %}">Flight from {{ flight.title }}</a></h2>
+                <h4>Lowest price: {{ flight.price }}€</h4>
+                <p>Departure date: {{ flight.departure_date|date:'d-m-Y' }}<br>
+                   Return date: {{ flight.arrival_date|date:'d-m-Y' }}<br>
+                   Nights in destination: {{ flight.nights }}</p>
+              </div>
+            </article>
+        {% endif %}
+    {% endfor%}
+{% endblock content %}
+
